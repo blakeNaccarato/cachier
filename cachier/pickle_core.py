@@ -37,7 +37,7 @@ class _PickleCore(_BaseCore):
         def __init__(self, filename, core, key):
             PatternMatchingEventHandler.__init__(
                 self,
-                patterns=["*" + filename],
+                patterns=[f"*{filename}"],
                 ignore_patterns=None,
                 ignore_directories=True,
                 case_sensitive=False,
@@ -98,9 +98,7 @@ class _PickleCore(_BaseCore):
 
     def _cache_fname(self):
         if self.cache_fname is None:
-            self.cache_fname = '.{}.{}'.format(
-                self.func.__module__, self.func.__qualname__
-            )
+            self.cache_fname = f'.{self.func.__module__}.{self.func.__qualname__}'
             self.cache_fname = self.cache_fname.replace('<', '_').replace(
                 '>', '_')
         return self.cache_fname
@@ -137,10 +135,7 @@ class _PickleCore(_BaseCore):
 
     def _get_cache_by_key(self, key=None, hash=None):
         fpath = self._cache_fpath()
-        if hash is None:
-            fpath += f'_{key}'
-        else:
-            fpath += f'_{hash}'
+        fpath += f'_{key}' if hash is None else f'_{hash}'
         try:
             with portalocker.Lock(fpath, mode='rb') as cache_file:
                 try:

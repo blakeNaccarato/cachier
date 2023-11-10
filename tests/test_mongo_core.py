@@ -1,5 +1,6 @@
 """Testing the MongoDB core of cachier."""
 
+
 import datetime
 import hashlib
 import platform
@@ -20,9 +21,7 @@ from cachier import cachier
 from cachier.base_core import RecalculationNeeded
 from cachier.mongo_core import _MongoCore
 
-_COLLECTION_NAME = 'cachier_test_{}_{}.{}.{}'.format(
-    platform.system(), sys.version_info[0], sys.version_info[1],
-    sys.version_info[2])
+_COLLECTION_NAME = f'cachier_test_{platform.system()}_{sys.version_info[0]}.{sys.version_info[1]}.{sys.version_info[2]}'
 
 
 def _test_mongetter():

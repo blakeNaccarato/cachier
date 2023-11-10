@@ -35,8 +35,7 @@ from cachier.core import _default_params
 
 def _get_decorated_func(func, **kwargs):
     cachier_decorator = cachier(**kwargs)
-    decorated_func = cachier_decorator(func)
-    return decorated_func
+    return cachier_decorator(func)
 
 
 # Pickle core tests
@@ -44,7 +43,7 @@ def _get_decorated_func(func, **kwargs):
 def _takes_2_seconds(arg_1, arg_2):
     """Some function."""
     sleep(2)
-    return 'arg_1:{}, arg_2:{}'.format(arg_1, arg_2)
+    return f'arg_1:{arg_1}, arg_2:{arg_2}'
 
 
 @pytest.mark.pickle
@@ -368,15 +367,13 @@ def _helper_bad_cache_file(sleeptime, separate_files):
     thread2.start()
     thread1.join(timeout=2)
     thread2.join(timeout=2)
-    if not res_queue.qsize() == 2:
+    if res_queue.qsize() != 2:
         return False
     res1 = res_queue.get()
     if not isinstance(res1, float):
         return False
     res2 = res_queue.get()
-    if res2 is not None or isinstance(res2, KeyError):
-        return False
-    return True
+    return res2 is None and not isinstance(res2, KeyError)
 
 
 # we want this to succeed at leat once
@@ -386,7 +383,7 @@ def _helper_bad_cache_file(sleeptime, separate_files):
 def test_bad_cache_file(separate_files):
     """Test pickle core handling of bad cache files."""
     sleeptimes = [0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 1, 1.5, 2]
-    sleeptimes = sleeptimes + sleeptimes
+    sleeptimes += sleeptimes
     for sleeptime in sleeptimes:
         if _helper_bad_cache_file(sleeptime, separate_files):
             return
@@ -459,16 +456,14 @@ def _helper_delete_cache_file(sleeptime, separate_files):
     thread2.start()
     thread1.join(timeout=2)
     thread2.join(timeout=2)
-    if not res_queue.qsize() == 2:
+    if res_queue.qsize() != 2:
         return False
     res1 = res_queue.get()
     # print(res1)
     if not isinstance(res1, float):
         return False
     res2 = res_queue.get()
-    if not ((isinstance(res2, KeyError)) or ((res2 is None))):
-        return False
-    return True
+    return (isinstance(res2, KeyError)) or res2 is None
     # print(res2)
     # print(type(res2))
 
@@ -479,7 +474,7 @@ def _helper_delete_cache_file(sleeptime, separate_files):
 def test_delete_cache_file(separate_files):
     """Test pickle core handling of missing cache files."""
     sleeptimes = [0.1, 0.2, 0.3, 0.5, 0.7, 1]
-    sleeptimes = sleeptimes * 4
+    sleeptimes *= 4
     for sleeptime in sleeptimes:
         if _helper_delete_cache_file(sleeptime, separate_files):
             return
@@ -531,7 +526,7 @@ EXPANDED_CUSTOM_DIR = os.path.expanduser(CUSTOM_DIR)
 def _takes_2_seconds_custom_dir(arg_1, arg_2):
     """Some function."""
     sleep(2)
-    return 'arg_1:{}, arg_2:{}'.format(arg_1, arg_2)
+    return f'arg_1:{arg_1}, arg_2:{arg_2}'
 
 
 @pytest.mark.pickle

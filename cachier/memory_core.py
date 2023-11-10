@@ -58,8 +58,7 @@ class _MemoryCore(_BaseCore):
             except KeyError:  # pragma: no cover
                 return  # that's ok, we don't need an entry in that case
             entry['being_calculated'] = False
-            cond = entry['condition']
-            if cond:
+            if cond := entry['condition']:
                 cond.acquire()
                 cond.notify_all()
                 cond.release()
