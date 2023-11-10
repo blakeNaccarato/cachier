@@ -7,7 +7,7 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Shay Palachy <shaypal5@gmail.com>
 import os
-import pickle  # for local caching
+import dill as pickle  # for local caching
 from datetime import datetime
 import threading
 

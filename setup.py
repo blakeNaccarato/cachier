@@ -51,7 +51,7 @@ setup(
         cachier=cachier.scripts.cli:cli
     ''',
     install_requires=[
-        'watchdog', 'portalocker',
+        'dill', 'watchdog', 'portalocker',
         'pathtools',  # for watchdog, who has dependency spec problem
         'setuptools>=67.6.0',  # to avoid vulnerability in 56.0.0
     ],

@@ -14,7 +14,7 @@ import datetime
 import functools
 import hashlib
 import os
-import pickle
+import dill as pickle
 from concurrent.futures import ThreadPoolExecutor
 from functools import wraps
 from typing import TYPE_CHECKING, Callable, Literal, Optional, TypedDict, Union

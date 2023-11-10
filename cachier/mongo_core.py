@@ -8,7 +8,7 @@
 # Copyright (c) 2016, Shay Palachy <shaypal5@gmail.com>
 
 import sys  # to make sure that pymongo was imported
-import pickle  # for serialization of python objects
+import dill as pickle  # for serialization of python objects
 from datetime import datetime
 import time   # to sleep when waiting on Mongo cache\
 import warnings  # to warn if pymongo is missing
