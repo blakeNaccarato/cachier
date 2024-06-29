@@ -7,7 +7,7 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2016, Shay Palachy <shaypal5@gmail.com>
 
-import pickle  # for serialization of python objects
+import dill as pickle  # for serialization of python objects
 import sys  # to make sure that pymongo was imported
 import time  # to sleep when waiting on Mongo cache\
 import warnings  # to warn if pymongo is missing

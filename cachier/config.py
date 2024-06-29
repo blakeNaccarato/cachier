@@ -1,7 +1,7 @@
 import datetime
 import hashlib
 import os
-import pickle
+import dill as pickle
 from typing import Optional, TypedDict, Union
 
 from ._types import Backend, HashFunc, Mongetter

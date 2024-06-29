@@ -12,7 +12,7 @@
 #     dirname
 # )
 import os
-import pickle
+import dill as pickle
 import threading
 from datetime import timedelta
 from random import random
